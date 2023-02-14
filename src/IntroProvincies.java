@@ -21,7 +21,7 @@ public class IntroProvincies {
             String codi_ine = linea.substring(11, 13);
             int comunitat_aut_id = Integer.parseInt(linea.substring(9, 11));
             String nom = linea.substring(14, 64);
-            int num_escons = Integer.parseInt(linea.substring(149, 155));
+            int num_escons = Integer.parseInt(linea.substring(149, 154));
             if (!codi_ine.equals("99")&&comunitat_aut_id!=99) {
                 try {
                     // the mysql insert statement

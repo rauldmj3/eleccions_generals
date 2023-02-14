@@ -20,12 +20,12 @@ public static void main(String[] args) throws Exception{
         do {
                 String linea = scan.nextLine();
                 String eleccio=linea.substring(0,1);
-                String codi_ca=linea.substring(8,14);
+                String codi_ca=linea.substring(8,13);
                 String nom_curt=linea.substring(14,63);
                 String nom_llarg=linea.substring(64,213);
-                String codi_pro=linea.substring(214,220);
-                String codi_auto=linea.substring(220,226);
-                String codi_nac=linea.substring(226,232);
+                String codi_pro=linea.substring(214,219);
+                String codi_auto=linea.substring(220,225);
+                String codi_nac=linea.substring(226,231);
                 try {
 
 
@@ -56,5 +56,4 @@ public static void main(String[] args) throws Exception{
                 i++;
         }while(scan.hasNext());
         con.close();
-}
-}
+}}
