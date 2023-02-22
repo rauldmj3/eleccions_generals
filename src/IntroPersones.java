@@ -10,21 +10,18 @@ public class IntroPersones {
         static Scanner scan = new Scanner(System.in);
 public static void main(String[] args) throws Exception{
         int i=1;
-        while (i!=4472) {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        Connection con = DriverManager.getConnection("jdbc:mysql://10.2.59.145:3306/eleccions2019", "perepi", "pastanaga");
+
+        do {
                 String linea = scan.nextLine();
-                String nom=linea.substring(25,49);
-                String cog1=linea.substring(50,74);
-                String cog2=linea.substring(75,99);
-                String sexe=linea.substring(100,101);
+                String nom=linea.substring(25,50).trim();
+                String cog1=linea.substring(50,75).trim();
+                String cog2=linea.substring(75,100).trim();
+                String sexe=linea.substring(100,101).trim();
                 try {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
 
-                        Connection con = DriverManager.getConnection("jdbc:mysql://10.2.59.145:3306/eleccions2019", "perepi", "pastanaga");
-
-
-                        //Preparem el Date
-                        Calendar calendar = Calendar.getInstance();
-                        Date startDate = new Date(calendar.getTime().getTime());
 
                         // the mysql insert statement
                         String query = " INSERT INTO persones (persona_id,nom,cog1,cog2,sexe,data_naixement,dni)"
@@ -44,12 +41,16 @@ public static void main(String[] args) throws Exception{
 
                         // execute the preparedstatement
                         preparedStmt.execute();
+                        if(i%500==0){
+                                con.close();
+                                con = DriverManager.getConnection("jdbc:mysql://10.2.59.145:3306/eleccions2019", "perepi", "pastanaga");
+                        }
 
-                        //Tanquem la connexió
-                        con.close();
                 } catch (Exception e) {
                         System.out.println(e);
                 }
                 i++;
+        }while(scan.hasNext());
+        con.close();
         }
-}}
+}

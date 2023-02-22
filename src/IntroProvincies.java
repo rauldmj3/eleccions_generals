@@ -14,14 +14,13 @@ public class IntroProvincies {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
         Connection con = DriverManager.getConnection("jdbc:mysql://10.2.59.145:3306/eleccions2019", "perepi", "pastanaga");
-        Calendar calendar = Calendar.getInstance();
-        Date startDate = new Date(calendar.getTime().getTime());
+
         do {
             String linea = scan.nextLine();
-            String codi_ine = linea.substring(11, 13);
-            int comunitat_aut_id = Integer.parseInt(linea.substring(9, 11));
-            String nom = linea.substring(14, 64);
-            int num_escons = Integer.parseInt(linea.substring(149, 154));
+            String codi_ine = linea.substring(11, 13).trim();
+            int comunitat_aut_id = Integer.parseInt(linea.substring(9, 11).trim());
+            String nom = linea.substring(14, 64).trim();
+            int num_escons = Integer.parseInt(linea.substring(149,155).trim());
             if (!codi_ine.equals("99")&&comunitat_aut_id!=99) {
                 try {
                     // the mysql insert statement

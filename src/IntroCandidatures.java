@@ -13,19 +13,15 @@ public static void main(String[] args) throws Exception{
 
         Connection con = DriverManager.getConnection("jdbc:mysql://10.2.59.145:3306/eleccions2019", "perepi", "pastanaga");
 
-
-        //Preparem el Date
-        Calendar calendar = Calendar.getInstance();
-        java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
         do {
                 String linea = scan.nextLine();
-                String eleccio=linea.substring(0,1);
-                String codi_ca=linea.substring(8,13);
-                String nom_curt=linea.substring(14,63);
-                String nom_llarg=linea.substring(64,213);
-                String codi_pro=linea.substring(214,219);
-                String codi_auto=linea.substring(220,225);
-                String codi_nac=linea.substring(226,231);
+                String eleccio=linea.substring(0,1).trim();
+                String codi_ca=linea.substring(8,14).trim();
+                String nom_curt=linea.substring(14,64).trim();
+                String nom_llarg=linea.substring(64,214).trim();
+                String codi_pro=linea.substring(214,220).trim();
+                String codi_auto=linea.substring(220,226).trim();
+                String codi_nac=linea.substring(226,232).trim();
                 try {
 
 
