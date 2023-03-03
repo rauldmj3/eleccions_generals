@@ -4,9 +4,9 @@
 el 'PARTIT ANIMALISTA CONTRA EL MALTRACTAMENT ANIMAL'(Catalunya) . 
 Ordena per el nombre de candidats de manera que les candidatures que més candidats tinguin surtin al principi.
 
-+-----------+----------+---------------------+
++----------------+-----------+---------------+
 | candidatura_id | nom_llarg | num_candidats |
-+-----------+----------+---------------------+
++----------------+-----------+---------------+
 
 SELECT c.candidatura_id,c.nom_llarg,COUNT(*) as num_candidats
 FROM candidatures c
@@ -22,9 +22,9 @@ ORDER BY num_candidats DESC;
 2-Selecciona el nom i cognoms com a 'nom_complet,'el nom curt de la candidatura com a 'nom_candidatura',sexe i el número identificatiu de candidat de aquells candidats 
 que el seu nom sigui igual o més llarg que el del candidat del PSOE 'Pedro Sánchez Pérez-Castejón'.Ordena per el segon cognom alfabèticament.
 
-+----------+--------+-----------+--------------------+
++-------------+-------------+-----------------+------+
 | nom_complet | candidat_id | nom_candidatura | sexe |
-+----------+--------+-----------+--------------------+
++-------------+-------------+-----------------+------+
 
 SELECT CONCAT(p.nom, ' ', p.cog1, ' ', p.cog2) AS nom_complet, c.candidat_id,can.nom_curt AS nom_candidatura,p.sexe
 FROM persones 
@@ -37,9 +37,9 @@ ORDER BY  p.cog2;
 3-Escriu una consulta SQL que seleccioni les comunitats autònomes que tenen més municipis que la mitjana de municipis per comunitat autònoma. 
 La consulta ha d'incloure el nom de la comunitat autònoma i el nombre total de municipis com a 'total_municipis', ordenats de manera descendent per nombre total de municipis. 
 
-+-------------+------------------------+
-| comunitat_autonoma | total_municipis |
-+-------------+------------------------+
++--------------------+------------------+
+| comunitat_autonoma | total_municipis  |
++--------------------+------------------+
 
 SELECT ca.nom AS comunitat_autonoma, COUNT(*) AS total_municipis
 FROM comunitats_autonomes ca
@@ -55,9 +55,9 @@ ORDER BY total_municipis DESC;
 
 4-Selecciona el nom curt de la candidatura i la quantitat de candidats femenins com a  'num_candidats_femenins' a aquella candidatura que tingui més dones com a candidats.
 
-+-------------+---------------------+
++----------+------------------------+
 | nom_curt | num_candidats_femenins |
-+-------------+---------------------+
++----------+------------------------+
 
 SELECT can.nom_curt, COUNT(c.persona_id) AS num_candidats_femenins
 FROM candidats c
