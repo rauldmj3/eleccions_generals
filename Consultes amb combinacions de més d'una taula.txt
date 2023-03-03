@@ -29,7 +29,7 @@ INNER JOIN candidatures can ON can.candidatura_id = c.candidatura_id
 INNER JOIN provincies pro ON c.provincia_id = pro.provincia_id
 WHERE pro.nom = 'Barcelona'
 GROUP BY p.nom, p.cog1
-ORDER BY p.cog1;
+ORDER BY p.cog1; 
 
 3-Comptabilitza per a cada comunitat autònoma quants candidats s'hi presenten, anomena-ho com a 
 'Num_Candidats'.Ordena els valors obtinguts per el nom de comunitat autònoma de forma ordenada alfabèticament.
