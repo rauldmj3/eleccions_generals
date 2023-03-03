@@ -48,3 +48,4 @@ ADD CONSTRAINT fk_vots_candidatures_municipis_candidatures FOREIGN KEY (candidat
 	REFERENCES candidatures(candidatura_id);
 
 
+ 
