@@ -17,7 +17,7 @@ Ordena per el nom de forma descendent.
 
 +-----+----------+
 | codi_ine | nom | 
-+-----+----------+
++-----+----------+ 
 
 SELECT codi_ine, nom
 FROM comunitats_autonomes
