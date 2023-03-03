@@ -1,0 +1,93 @@
+5 subconsultes
+
+1-Selecciona l'identificatiu de candidatura,el nom complert de candidatura i el nombre de candidats'num_candidats' d'aquelles candidatures que tenen més candidats que 
+el 'PARTIT ANIMALISTA CONTRA EL MALTRACTAMENT ANIMAL'(Catalunya) . 
+Ordena per el nombre de candidats de manera que les candidatures que més candidats tinguin surtin al principi.
+
++-----------+----------+---------------------+
+| candidatura_id | nom_llarg | num_candidats |
++-----------+----------+---------------------+
+
+SELECT c.candidatura_id,c.nom_llarg,COUNT(*) as num_candidats
+FROM candidatures c
+INNER JOIN candidats can ON can.candidatura_id=c.candidatura_id
+GROUP BY c.candidatura_id
+HAVING num_candidats>(SELECT COUNT(*) as num_candidats
+				FROM candidats can
+				INNER JOIN candidatures c ON c.candidatura_id=can.candidatura_id 
+			WHERE c.nom_llarg='PARTIT ANIMALISTA CONTRA EL MALTRACTAMENT ANIMAL')
+
+ORDER BY num_candidats DESC;
+
+2-Selecciona el nom i cognoms com a 'nom_complet,'el nom curt de la candidatura com a 'nom_candidatura',sexe i el número identificatiu de candidat de aquells candidats 
+que el seu nom sigui igual o més llarg que el del candidat del PSOE 'Pedro Sánchez Pérez-Castejón'.Ordena per el segon cognom alfabèticament.
+
++----------+--------+-----------+--------------------+
+| nom_complet | candidat_id | nom_candidatura | sexe |
++----------+--------+-----------+--------------------+
+
+SELECT CONCAT(p.nom, ' ', p.cog1, ' ', p.cog2) AS nom_complet, c.candidat_id,can.nom_curt AS nom_candidatura,p.sexe
+FROM persones 
+  INNER  JOIN candidats c ON p.persona_id = c.persona_id
+  INNER  JOIN candidatures can ON c.candidatura_id = can.candidatura_id
+WHERE LENGTH(p.nom) + LENGTH(p.cog1) + LENGTH(p.cog2) >= LENGTH('Pedro Sánchez Pérez-Castejón')
+ORDER BY  p.cog2;
+
+
+3-Escriu una consulta SQL que seleccioni les comunitats autònomes que tenen més municipis que la mitjana de municipis per comunitat autònoma. 
+La consulta ha d'incloure el nom de la comunitat autònoma i el nombre total de municipis com a 'total_municipis', ordenats de manera descendent per nombre total de municipis. 
+
++-------------+------------------------+
+| comunitat_autonoma | total_municipis |
++-------------+------------------------+
+
+SELECT ca.nom AS comunitat_autonoma, COUNT(*) AS total_municipis
+FROM comunitats_autonomes ca
+INNER JOIN provincies p ON p.comunitat_aut_id = ca.comunitat_aut_id
+INNER JOIN municipis m ON m.provincia_id = p.provincia_id
+GROUP BY ca.comunitat_aut_id
+HAVING COUNT(*) > (SELECT AVG(total_municipios) FROM (SELECT ca.comunitat_aut_id, COUNT(*) AS total_municipis
+                                                      FROM comunitats_autonomes ca
+                                                      INNER JOIN provincies p ON p.comunitat_aut_id = ca.comunitat_aut_id
+                                                      INNER JOIN municipis m ON m.provincia_id = p.provincia_id
+                                                      GROUP BY ca.comunitat_aut_id) subconsulta)
+ORDER BY total_municipis DESC;
+
+4-Selecciona el nom curt de la candidatura i la quantitat de candidats femenins com a  'num_candidats_femenins' a aquella candidatura que tingui més dones com a candidats.
+
++-------------+---------------------+
+| nom_curt | num_candidats_femenins |
++-------------+---------------------+
+
+SELECT can.nom_curt, COUNT(c.persona_id) AS num_candidats_femenins
+FROM candidats c
+INNER JOIN candidatures can ON c.candidatura_id = can.candidatura_id
+INNER JOIN persones p ON c.persona_id = p.persona_id
+WHERE p.sexe = 'F'
+GROUP BY can.candidatura_id
+HAVING COUNT(c.persona_id) = (
+  SELECT MAX(num_candidats_femenins) FROM (
+    SELECT COUNT(c.persona_id) AS num_candidats_femenins
+    FROM candidats c
+    INNER JOIN candidatures can ON c.candidatura_id = can.candidatura_id
+    INNER JOIN persones p ON c.persona_id = p.persona_id
+    WHERE p.sexe = 'F'
+    GROUP BY can.candidatura_id
+  ) AS subconsulta
+);
+
+5-Selecciona els noms d'aquells municipis en els quals no consti cap candidat presentat a les eleccions del 2019.
+
++-----+
+| nom |
++-----+
+
+SELECT m.nom
+FROM municipis m
+WHERE m.municipi_id NOT IN (
+  SELECT emun.municipi_id
+  FROM eleccions_municipis emun
+  INNER JOIN candidatures c ON emun.eleccio_id = c.eleccio_id
+  INNER JOIN candidats can ON can.candidatura_id = candidats.candidatura_id
+  WHERE emun.eleccio_id = 1
+)

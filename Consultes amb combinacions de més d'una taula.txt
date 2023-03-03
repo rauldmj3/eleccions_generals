@@ -1,0 +1,78 @@
+5 preguntes de consultes de combinacions de més d'una taula
+
+1- De cada municipi que tingui totes les vocals en el seu nom mostra el seu nom,
+identificatiu,codi_ine i el nom de la comunitat autònoma a la que pertany com a 'Nom_CA' 
+Ordena els valors per el nom de la comunitat autònoma.
+
++----------+--------+-----------+------+
+| nom | municipi_id | codi_ine | Nom_CA|
++----------+--------+-----------+------+
+
+SELECT m.nom ,m.municipi_id,m.codi_ine,ca.nom AS 'Nom_CA'
+FROM municipis m
+INNER JOIN comunitats_autonomes ca ON m.provincia_id = ca.comunitat_aut_id
+WHERE LOWER(m.nom) LIKE '%a%e%i%o%u%' 
+ORDER BY ca.nom ASC;
+
+
+2-Selecciona el nom,primer 'cognom' i el nom curt de la candidatura de les persones que es presenten a una candidatura que pertanyi a la provincia de Barcelona. 
+Ordena per el cognom del candidat.
+
++-----------+-------------+
+| nom | cognom | nom_curt |
++-----------+-------------+
+
+SELECT p.nom, p.cog1 as cognom, MIN(can.nom_curt) AS nom_curt
+FROM persones p
+INNER JOIN candidats c ON c.candidat_id = p.persona_id
+INNER JOIN candidatures can ON can.candidatura_id = c.candidatura_id
+INNER JOIN provincies pro ON c.provincia_id = pro.provincia_id
+WHERE pro.nom = 'Barcelona'
+GROUP BY p.nom, p.cog1
+ORDER BY p.cog1;
+
+3-Comptabilitza per a cada comunitat autònoma quants candidats s'hi presenten, anomena-ho com a 
+'Num_Candidats'.Ordena els valors obtinguts per el nom de comunitat autònoma de forma ordenada alfabèticament.
+
++----------+----------+
+| nom | Num_Candidats |
++----------+----------+
+
+SELECT ca.nom,COUNT(*) as Num_Candidats
+FROM candidats c 
+INNER JOIN provincies p ON p.provincia_id=c.provincia_id
+INNER JOIN comunitats_autonomes ca ON p.comunitat_aut_id=ca.comunitat_aut_id
+GROUP BY ca.comunitat_aut_id
+ORDER BY ca.nom ASC;
+
+4-Mostra quants vots en blanc hi ha hagut a les províncies acabades en la lletra 'A'.
+Mostra el nom de la provincia i el número de vots en blanc com a 'Vots_Blancs'.
+Ordena per el número de vots en blanc de més a menys.
+
++----------+--------+
+| nom | Vots_Blancs |
++----------+--------+
+
+SELECT p.nom,SUM(emun.vots_blancs) as Vots_Blancs
+FROM provincies p
+INNER JOIN municipis m ON p.provincia_id=m.provincia_id
+INNER JOIN eleccions_municipis emun ON emun.municipi_id=m.municipi_id
+WHERE p.nom LIKE '%a'
+GROUP BY p.provincia_id
+ORDER BY Vots_Blancs DESC;
+
+
+5-Selecciona les dues comunitats autònomes que més candidatures tenen. Mostra el nom de la comunitat i la quantitat de candidatures com a 'qt_candidatures'.
+
++----------+---------+
+| nom | qt_candidats |
++----------+---------+
+
+SELECT ca.nom,COUNT(*) AS qt_candidatures
+FROM candidatures can
+INNER JOIN candidats c ON can.candidatura_id=c.candidatura_id
+INNER JOIN provincies p ON p.provincia_id=c.provincia_id
+INNER JOIN comunitats_autonomes ca ON p.comunitat_aut_id=ca.comunitat_aut_id
+GROUP BY ca.comunitat_aut_id
+ORDER BY qt_candidatures DESC
+LIMIT 2;

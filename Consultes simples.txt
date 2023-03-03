@@ -1,0 +1,63 @@
+5 Consultes Simples
+1-Selecciona l'identificatiu de la candidatura, el nom curt i el nom llarg de les candidatures 
+les qual en el seu nom llarg és trobi la seva autodenominació com a partit. Exemple fictici:'Partido Pacifista de la Rioja','Partit Alegre de València'.
+Ordena per el nom curt i el nom llarg respectivament.
+
++-----------+----------+----------------+
+| candidatura_id | nom_curt | nom_llarg |
++-----------+----------+----------------+
+
+SELECT candidatura_id, nom_curt, nom_llarg
+FROM candidatures
+WHERE nom_llarg LIKE '%PARTI%'
+ORDER BY nom_curt,nom_llarg;
+
+2-Extreu el codi de l'Institut Nacional d'Estadística i el nom de les comunitats autònomes que estan composades per més d'una paraula.
+Ordena per el nom de forma descendent.
+
++-----+----------+
+| codi_ine | nom | 
++-----+----------+
+
+SELECT codi_ine, nom
+FROM comunitats_autonomes
+WHERE CHAR_LENGTH(nom) - LENGTH(REPLACE(nom, ' ', '')) > 0
+ORDER BY nom DESC;
+
+3-Selecciona el número de candidats com a 'num_candidats' que hi ha per cada provincia i ordena per el número de candidats de forma descendent.
+
++-------------+----------------+
+| provincia_id | num_candidats |
++-------------+----------------+
+
+SELECT provincia_id, COUNT(*) AS num_candidats
+FROM candidats
+GROUP BY provincia_id
+ORDER BY num_candidats DESC
+
+4-Selecciona l'identificatiu de municipi i el nom d'aquells municipis en els que hi hagin 5 vocals o més en el seu nom. Selecciona'n 10.
+Ordena per l'identificatiu de la provincia i consequentment per el nom.
+
++-------------+-----+
+| municipi_id | nom |
++-------------+-----+
+
+SELECT municipi_id,nom
+FROM municipis
+WHERE nom REGEXP "[aeiouAEIOU].*[aeiouAEIOU].*[aeiouAEIOU].*[aeiouAEIOU].*[aeiouAEIOU]."
+ORDER BY provincia_id ASC, nom ASC
+LIMIT 10;
+
+5-Selecciona l'identificació de candidat, l'identificació de la candidatura, l'identificació de provincia  i defineix un nou valor aleatori anomenat 'Salari_anual' comprès entre els valors 14000 i 88000. 
+Ordena per el salari anual de forma descendent.
+
++----------+--------+-----------+----------------------------+
+| candidat_id | candidatura_id | provincia_id | Salari_anual |
++----------+--------+-----------+----------------------------+
+
+
+SELECT candidat_id, candidatura_id, provincia_id, 
+FLOOR(RAND() * (88000 - 14000 + 1) + 14000) AS Salari_anual
+FROM candidats
+ORDER BY Salari_anual DESC;
+

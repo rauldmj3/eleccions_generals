@@ -1,0 +1,14 @@
+Consulta fent ús de Window Functions
+1-Dóna la llista dels noms i primer cognom  de tots els candidats juntament amb la província en què s'han presentat a les eleccions. A més a més, inclou la columna 'total_candidats_provincia' que indica el nombre total de candidats que s'han presentat a cada província. 
+Ordena els resultats per ordre alfabètic de la província, i dins de cada província per ordre alfabètic del nom i cognom del candidat.
+
++----------+--------+-------------+----------+---------+
+| nom | cognom | provincia | total_candidats_provincia |
++----------+--------+-------------+----------+---------+
+
+SELECT  p.nom, p.cog1 as cognom, pro.nom AS provincia, 
+       COUNT(*) OVER(PARTITION BY pro.nom) AS total_candidats_provincia
+FROM persones p
+INNER JOIN candidats c ON c.candidat_id = p.persona_id
+INNER JOIN provincies pro ON pro.provincia_id = c.provincia_id
+ORDER BY pro.nom, p.nom, p.cog1;
