@@ -4,9 +4,9 @@
 identificatiu,codi_ine i el nom de la comunitat autònoma a la que pertany com a 'Nom_CA' 
 Ordena els valors per el nom de la comunitat autònoma.
 
-+----------+--------+-----------+------+
-| nom | municipi_id | codi_ine | Nom_CA|
-+----------+--------+-----------+------+
++-----+-------------+----------+--------+
+| nom | municipi_id | codi_ine | Nom_CA |
++-----+-------------+----------+--------+
 
 SELECT m.nom ,m.municipi_id,m.codi_ine,ca.nom AS 'Nom_CA'
 FROM municipis m
@@ -18,9 +18,9 @@ ORDER BY ca.nom ASC;
 2-Selecciona el nom,primer 'cognom' i el nom curt de la candidatura de les persones que es presenten a una candidatura que pertanyi a la provincia de Barcelona. 
 Ordena per el cognom del candidat.
 
-+-----------+-------------+
++-----+--------+----------+
 | nom | cognom | nom_curt |
-+-----------+-------------+
++-----+--------+----------+
 
 SELECT p.nom, p.cog1 as cognom, MIN(can.nom_curt) AS nom_curt
 FROM persones p
@@ -34,9 +34,9 @@ ORDER BY p.cog1;
 3-Comptabilitza per a cada comunitat autònoma quants candidats s'hi presenten, anomena-ho com a 
 'Num_Candidats'.Ordena els valors obtinguts per el nom de comunitat autònoma de forma ordenada alfabèticament.
 
-+----------+----------+
++-----+---------------+
 | nom | Num_Candidats |
-+----------+----------+
++-----+---------------+
 
 SELECT ca.nom,COUNT(*) as Num_Candidats
 FROM candidats c 
@@ -49,9 +49,9 @@ ORDER BY ca.nom ASC;
 Mostra el nom de la provincia i el número de vots en blanc com a 'Vots_Blancs'.
 Ordena per el número de vots en blanc de més a menys.
 
-+----------+--------+
++-----+-------------+
 | nom | Vots_Blancs |
-+----------+--------+
++-----+-------------+
 
 SELECT p.nom,SUM(emun.vots_blancs) as Vots_Blancs
 FROM provincies p
@@ -64,9 +64,9 @@ ORDER BY Vots_Blancs DESC;
 
 5-Selecciona les dues comunitats autònomes que més candidatures tenen. Mostra el nom de la comunitat i la quantitat de candidatures com a 'qt_candidatures'.
 
-+----------+---------+
++-----+--------------+
 | nom | qt_candidats |
-+----------+---------+
++-----+--------------+
 
 SELECT ca.nom,COUNT(*) AS qt_candidatures
 FROM candidatures can
