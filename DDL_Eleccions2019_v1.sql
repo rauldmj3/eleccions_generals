@@ -100,27 +100,6 @@ CREATE TABLE vots_candidatures_municipis (
    candidatura_id  	INT,
    vots            	INT
 );
-
-INSERT INTO comunitats_autonomes 
-   VALUES 	('1','Andalucía','01'),
-			('2','Aragón','02'),
-			('3','Asturias','03'),
-			('4','Baleares','04'),
-			('5','Canarias','05'),
-			('6','Cantabria','06'),
-			('7','Castilla - La Mancha','07'),
-			('8','Castilla y León','08'),
-			('9','Cataluña','09'),
-          		('10','Extremadura','10'),
-			('11','Galicia','11'),
-			('12','Madrid','12'),
-			('13','Navarra','13'),
-			('14','País Vasco','14'),
-			('15','Región de Murcia','15'),
-			('16','La Rioja','16'),
-			('17','Comunitat Valenciana','17'),
-			('18','Ceuta','18'),
-			('19','Melilla','19');
             
 INSERT INTO eleccions (eleccio_id,nom,data,any,mes) VALUES (1,'Eleccions Generals 2019',20191110,2019,11);
 
