@@ -3,9 +3,9 @@
 les qual en el seu nom llarg és trobi la seva autodenominació com a partit. Exemple fictici:'Partido Pacifista de la Rioja','Partit Alegre de València'.
 Ordena per el nom curt i el nom llarg respectivament.
 
-+-----------+----------+----------------+
++---------------+----------+------------+
 | candidatura_id | nom_curt | nom_llarg |
-+-----------+----------+----------------+
++---------------+----------+------------+
 
 SELECT candidatura_id, nom_curt, nom_llarg
 FROM candidatures
@@ -15,9 +15,9 @@ ORDER BY nom_curt,nom_llarg;
 2-Extreu el codi de l'Institut Nacional d'Estadística i el nom de les comunitats autònomes que estan composades per més d'una paraula.
 Ordena per el nom de forma descendent.
 
-+-----+----------+
++----------+-----+
 | codi_ine | nom | 
-+-----+----------+ 
++---------+------+ 
 
 SELECT codi_ine, nom
 FROM comunitats_autonomes
@@ -26,9 +26,9 @@ ORDER BY nom DESC;
 
 3-Selecciona el número de candidats com a 'num_candidats' que hi ha per cada provincia i ordena per el número de candidats de forma descendent.
 
-+-------------+----------------+
++--------------+---------------+
 | provincia_id | num_candidats |
-+-------------+----------------+
++--------------+---------------+
 
 SELECT provincia_id, COUNT(*) AS num_candidats
 FROM candidats
@@ -51,9 +51,9 @@ LIMIT 10;
 5-Selecciona l'identificació de candidat, l'identificació de la candidatura, l'identificació de provincia  i defineix un nou valor aleatori anomenat 'Salari_anual' comprès entre els valors 14000 i 88000. 
 Ordena per el salari anual de forma descendent.
 
-+----------+--------+-----------+----------------------------+
++-------------+----------------+--------------+--------------+
 | candidat_id | candidatura_id | provincia_id | Salari_anual |
-+----------+--------+-----------+----------------------------+
++-------------+----------------+--------------+--------------+
 
 
 SELECT candidat_id, candidatura_id, provincia_id, 
