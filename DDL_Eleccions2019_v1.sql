@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS eleccions2019;
     
 CREATE DATABASE eleccions2019;
 USE eleccions2019;
-   
+    
   CREATE TABLE comunitats_autonomes(
    comunitat_aut_id 		TINYINT  AUTO_INCREMENT,
    nom 				VARCHAR(45),
